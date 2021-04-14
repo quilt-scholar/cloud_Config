@@ -1,0 +1,79 @@
+spring:
+  profiles: 
+    active: dev
+    
+---
+server:
+  port: 8081
+
+spring:
+  profiles: dev
+  application:
+    name: springcloud-provider-dept # 这三个服务提供者名称必须一致，因为我们客户端是通过服务名称来获取服务的
+  datasource:
+    url: jdbc:mysql://localhost:3306/springcloud?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+
+mybatis:
+  type-aliases-package: com.zou.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
+#  config-location: classpath:mybatis/mybatis-config.xml config-location不能与configuration同时出现
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名规则自动转换
+
+#Eureka
+eureka:
+  client:
+    service-url:
+      # 如果是集群，需要将服务注册到集群服务中
+#      defaultZone: http://localhost:7001/eureka/
+      defaultZone: http://localhost3:7003/eureka/,http://localhost1:7001/eureka/,http://localhost2:7002/eureka/
+  instance:
+    instance-id: springcloud-provider-dept8081 # 修改Eureka服务默认描述信息
+    prefer-ip-address: true # true开启访问路径可以显示IP地址
+
+#info配置
+info:
+  app.name: zou-springcloud-provider #项目的名称
+  company.name: com.zou #公司的名称
+
+
+
+---
+server:
+  port: 8081
+
+spring:
+  profiles: test
+  application:
+    name: springcloud-provider-dept # 这三个服务提供者名称必须一致，因为我们客户端是通过服务名称来获取服务的
+  datasource:
+    url: jdbc:mysql://localhost:3306/springcloud02?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+
+mybatis:
+  type-aliases-package: com.zou.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
+#  config-location: classpath:mybatis/mybatis-config.xml config-location不能与configuration同时出现
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名规则自动转换
+
+#Eureka
+eureka:
+  client:
+    service-url:
+      # 如果是集群，需要将服务注册到集群服务中
+#      defaultZone: http://localhost:7001/eureka/
+      defaultZone: http://localhost3:7003/eureka/,http://localhost1:7001/eureka/,http://localhost2:7002/eureka/
+  instance:
+    instance-id: springcloud-provider-dept8081 # 修改Eureka服务默认描述信息
+    prefer-ip-address: true # true开启访问路径可以显示IP地址
+
+#info配置
+info:
+  app.name: zou-springcloud-provider #项目的名称
+  company.name: com.zou #公司的名称
